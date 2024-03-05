@@ -15,7 +15,7 @@
 		flex="flex-1 lg:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="bg-surface-100-800-token w-full child:p-2 ring-[rgb(250_250_250_/_0.05)] child:space-x-2"
+		class="bg-surface-100-800-token w-full child:p-2 ring-[rgb(250_250_250_/_0.05)] rounded-b-xl child:space-x-2"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
 			<span>Home</span>
