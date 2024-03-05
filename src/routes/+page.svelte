@@ -9,7 +9,7 @@
 	gap-2
 	mx-auto my-2
 	child:h-full child:text-center child:bg-primary-hover-token child:items-center child:justify-center
-	h-full
+	h-[calc(100%_-_72px)]
 	"
 >
 	<div class="card p-4 flex gap-4 flex-col rounded-xl col-start-1 col-end-2">
