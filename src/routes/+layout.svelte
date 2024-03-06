@@ -14,7 +14,7 @@
 		flex="flex-1 lg:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="child:p-2 w-full border-4 border-red-600"
+		class="child:p-2 w-full"
 		regionList="space-x-1"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
@@ -35,7 +35,7 @@
 			<FontAwesomeIcon icon={faGear} />
 		</TabAnchor>
 	</TabGroup>
-	<div class="h-full max-h-full child:container p-4 flex justify-center border-4 border-blue-500">
+	<div class="h-full child:container p-4 flex justify-center overflow-y-scroll">
 		<slot />
 	</div>
 </div>

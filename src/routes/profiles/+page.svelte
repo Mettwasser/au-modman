@@ -4,7 +4,7 @@
 	// let names = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
 </script>
 
-<div class="space-y-2 overflow-y-scroll">
+<div class="space-y-2">
 	{#each names as name (name)}
 		<ProfileCard {name} />
 	{/each}
