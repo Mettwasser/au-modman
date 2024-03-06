@@ -1,9 +1,9 @@
 <script lang="ts">
-	import '../app.postcss';
-	import { TabGroup, TabAnchor } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
+	import { faGear, faGears, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	import { faUser, faHouse, faGears, faGear } from '@fortawesome/free-solid-svg-icons';
+	import { TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
+	import '../app.postcss';
 </script>
 
 <div class="flex flex-col h-full justify-center">
@@ -31,8 +31,12 @@
 			<span>Mods</span>
 			<FontAwesomeIcon icon={faGears} class="ml-1" />
 		</TabAnchor>
-		<TabAnchor href="/settings" selected={$page.url.pathname === '/settings'}>
-			<FontAwesomeIcon icon={faGear} class="ml-1" />
+		<TabAnchor
+			href="/settings"
+			selected={$page.url.pathname === '/settings'}
+			class="lg:absolute lg:right-2"
+		>
+			<FontAwesomeIcon icon={faGear} />
 		</TabAnchor>
 	</TabGroup>
 	<div class="h-full child:container p-4 flex justify-center">
