@@ -6,15 +6,16 @@
 	import { faUser, faHouse, faGears, faGear } from '@fortawesome/free-solid-svg-icons';
 </script>
 
-<div class="h-full">
+<div class="flex flex-col h-full justify-center">
 	<TabGroup
 		justify="justify-center"
-		active="variant-filled-primary"
+		active="bg-gradient-to-br variant-gradient-tertiary-secondary"
 		hover="hover:variant-soft-primary"
 		flex="flex-1 lg:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="bg-surface-100-800-token w-full child:p-2"
+		class="child:p-2 w-full"
+		regionList="space-x-1"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
 			<span>Home</span>
@@ -34,7 +35,7 @@
 			<FontAwesomeIcon icon={faGear} class="ml-1" />
 		</TabAnchor>
 	</TabGroup>
-	<div class="h-[calc(100%_-_72px)] child:container">
+	<div class="h-full child:container p-4 flex justify-center">
 		<slot />
 	</div>
 </div>

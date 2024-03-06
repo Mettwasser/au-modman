@@ -4,10 +4,13 @@ mod commands;
 mod db;
 mod models;
 
+use chrono::{DateTime, Utc};
 use commands::*;
 use db::get_db;
 
 use std::error::Error;
+
+pub type Datetime = DateTime<Utc>;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

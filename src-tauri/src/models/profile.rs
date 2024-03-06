@@ -1,9 +1,12 @@
-use std::borrow::Cow;
+use std::borrow::{Borrow, Cow};
 
+use chrono::Utc;
 use serde::{Deserialize, Serialize};
-use surrealdb::sql::{Array, Datetime, Thing};
+use surrealdb::sql::Thing;
 
-use super::modification::Modification;
+use crate::Datetime;
+
+use super::{modification::Modification, GetThing};
 
 pub const PROFILE: &str = "profile";
 
@@ -11,11 +14,28 @@ pub const PROFILE: &str = "profile";
 // Implement fully
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Profile {
-    id: Thing,
-    pub changed_at: Datetime,
+pub struct Profile<'a, 'b> {
+    pub name: Cow<'a, str>,
+    pub folder_location: Cow<'a, str>,
     pub created_at: Datetime,
-    pub folder_location: String,
-    pub modification: Modification, // Nested struct
-    pub name: Cow<'static, str>,
+    pub changed_at: Option<Datetime>,
+    pub modifications: Vec<Modification<'b>>,
+}
+
+impl<'a, 'b> Profile<'a, 'b> {
+    pub fn new(name: Cow<'a, str>, folder_location: Cow<'a, str>) -> Self {
+        Self {
+            changed_at: None,
+            created_at: Utc::now(),
+            modifications: Vec::new(),
+            folder_location,
+            name,
+        }
+    }
+}
+
+impl<'a, 'b> GetThing for Profile<'a, 'b> {
+    fn get_thing(&self) -> Thing {
+        ("profile", self.name.borrow()).into()
+    }
 }
