@@ -14,7 +14,7 @@
 		flex="flex-1 lg:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="child:p-2 w-full"
+		class="child:p-2 w-full border-4 border-red-600"
 		regionList="space-x-1"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
@@ -31,15 +31,11 @@
 			<span>Mods</span>
 			<FontAwesomeIcon icon={faGears} class="ml-1" />
 		</TabAnchor>
-		<TabAnchor
-			href="/settings"
-			selected={$page.url.pathname === '/settings'}
-			class="lg:absolute lg:right-2"
-		>
+		<TabAnchor href="/settings" selected={$page.url.pathname === '/settings'} class="lg:absolute lg:right-8">
 			<FontAwesomeIcon icon={faGear} />
 		</TabAnchor>
 	</TabGroup>
-	<div class="h-full child:container p-4 flex justify-center">
+	<div class="h-full max-h-full child:container p-4 flex justify-center border-4 border-blue-500">
 		<slot />
 	</div>
 </div>

@@ -20,8 +20,8 @@
 		<header class="card-header h3">Profiles</header>
 		<section class="text-center">7</section>
 	</div>
-	<div class="card p-4 flex gap-4 rounded-xl col-start-1 col-end-3">
-		<header class="card-header h3">with ❤️ by Mettwasser & Vali</header>
+	<div class="card p-4 flex flex-col gap-4 rounded-xl col-start-1 col-end-3">
+		<header class="card-header h3">with ❤️ by Mettwasser, Vali & Bekian</header>
 	</div>
 	<div class="card p-4 flex gap-4 flex-col rounded-xl col-start-3 col-end-4 h-full">
 		{#await version then version}

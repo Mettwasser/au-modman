@@ -41,10 +41,12 @@
 		"windows": [
 			{
 				"fullscreen": false,
-				"height": 600,
 				"resizable": true,
+				"height": 600,
 				"title": "AU Modman",
-				"width": 1100
+				"width": 1100,
+				"minWidth": 700,
+				"minHeight": 400
 			}
 		]
 	}
