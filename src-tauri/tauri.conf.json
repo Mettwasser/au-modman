@@ -16,35 +16,24 @@
 		},
 		"bundle": {
 			"active": true,
-			"category": "DeveloperTool",
-			"copyright": "",
-			"deb": {
-				"depends": []
-			},
-			"externalBin": [],
+			"targets": "msi",
 			"icon": [
 				"icons/amogus.ico"
 			],
-			"identifier": "com.tauri.dev",
-			"longDescription": "",
-			"macOS": {
-				"entitlements": null,
-				"exceptionDomain": "",
-				"frameworks": [],
-				"providerShortName": null,
-				"signingIdentity": null
-			},
-			"resources": [],
-			"shortDescription": "",
-			"targets": "all",
+			"identifier": "com.tauri.dev.test",
+			"category": "Utility",
+			"publisher": "Mettwasser",
 			"windows": {
-				"certificateThumbprint": null,
-				"digestAlgorithm": "sha256",
-				"timestampUrl": ""
+				"allowDowngrades": true,
+				"digestAlgorithm": "SHA-256",
+				"webviewInstallMode": {
+					"silent": true,
+					"type": "downloadBootstrapper"
+				}
 			}
 		},
 		"security": {
-			"csp": null
+			"csp": ""
 		},
 		"updater": {
 			"active": false

@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
-
-	import { faGears, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
+	import { TabGroup, TabAnchor } from '@skeletonlabs/skeleton';
+	import { page } from '$app/stores';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+	import { faUser, faHouse, faGears, faGear } from '@fortawesome/free-solid-svg-icons';
 </script>
 
-<div class="h-full container mx-auto">
+<div class="h-full">
 	<TabGroup
 		justify="justify-center"
 		active="variant-filled-primary"
@@ -15,7 +14,7 @@
 		flex="flex-1 lg:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="bg-surface-100-800-token ring-[rgb(250_250_250_/_0.05)] rounded-b-xl w-full child:p-2 child:space-x-2"
+		class="bg-surface-100-800-token w-full child:p-2"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
 			<span>Home</span>
@@ -31,6 +30,11 @@
 			<span>Mods</span>
 			<FontAwesomeIcon icon={faGears} class="ml-1" />
 		</TabAnchor>
+		<TabAnchor href="/settings" selected={$page.url.pathname === '/settings'}>
+			<FontAwesomeIcon icon={faGear} class="ml-1" />
+		</TabAnchor>
 	</TabGroup>
-	<slot />
+	<div class="h-[calc(100%_-_72px)] child:container">
+		<slot />
+	</div>
 </div>

@@ -117,6 +117,9 @@
 	],
 	"cSpell.words": [
 		"amogus",
+		"Bootstrapper",
+		"cmds",
+		"Datetime",
 		"fontawesome",
 		"fortawesome",
 		"fullscreen",
@@ -124,10 +127,13 @@
 		"modman",
 		"pcss",
 		"skeletonlabs",
+		"surrealdb",
 		"tailwindcss",
-		"tauri"
+		"tauri",
+		"Vali"
 	],
 	"editor.quickSuggestions": {
 		"strings": true
-	}
+	},
+	"rust-analyzer.showUnlinkedFileNotification": false
 }
