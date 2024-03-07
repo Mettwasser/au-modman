@@ -3,3 +3,14 @@
 @tailwind utilities;
 @tailwind variants;
 
+@layer components {
+	.home-card {
+		@apply p-4 flex flex-col rounded-xl glassy;
+		background: rgba(77, 77, 77, 0.3);
+	}
+}
+
+.glassy {
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(77, 66, 66, 0.3);
+}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { faGear, faGears, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
+	import { faGear, faGears, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
@@ -11,11 +11,11 @@
 		justify="justify-center"
 		active="bg-gradient-to-br variant-gradient-tertiary-secondary"
 		hover="hover:variant-soft-primary"
-		flex="flex-1 lg:flex-none"
+		flex="flex-1 md:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="child:p-2 w-full"
-		regionList="space-x-1"
+		class="w-full mt-4"
+		regionList="gap-1"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
 			<span>Home</span>
@@ -31,11 +31,19 @@
 			<span>Mods</span>
 			<FontAwesomeIcon icon={faGears} class="ml-1" />
 		</TabAnchor>
-		<TabAnchor href="/settings" selected={$page.url.pathname === '/settings'} class="lg:absolute lg:right-8">
+		<div class="!flex md:absolute md:right-4 gap-1">
+			<TabAnchor href="/credits" selected={$page.url.pathname === '/credits'} class="hidden md:block">
+				<FontAwesomeIcon icon={faUsers} />
+			</TabAnchor>
+			<TabAnchor href="/settings" selected={$page.url.pathname === '/settings'} class="hidden md:block">
+				<FontAwesomeIcon icon={faGear} />
+			</TabAnchor>
+		</div>
+		<TabAnchor href="/settings" selected={$page.url.pathname === '/settings'} class="block md:hidden">
 			<FontAwesomeIcon icon={faGear} />
 		</TabAnchor>
 	</TabGroup>
-	<div class="h-full child:container p-4 flex justify-center overflow-y-scroll">
+	<div class="h-full m-2 p-4 flex overflow-hidden">
 		<slot />
 	</div>
 </div>
