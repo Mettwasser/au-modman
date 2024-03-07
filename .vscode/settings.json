@@ -138,9 +138,6 @@
 		"strings": true
 	},
 	"rust-analyzer.showUnlinkedFileNotification": false,
-	"[svelte]": {
-		"editor.defaultFormatter": "svelte.svelte-vscode"
-	},
 	"files.associations": {
 		"*.postcss": "tailwindcss"
 	}

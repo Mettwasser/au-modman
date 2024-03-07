@@ -9,12 +9,12 @@
 <div class="flex flex-col h-full justify-center">
 	<TabGroup
 		justify="justify-center"
-		active="bg-gradient-to-br variant-gradient-tertiary-secondary"
+		active="bg-gradient-to-br from-tertiary-500/60 to-secondary-500/60"
 		hover="hover:variant-soft-primary"
 		flex="flex-1 md:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="w-full mt-4"
+		class="w-full mt-4 px-6 md:px-0"
 		regionList="gap-1"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
@@ -43,7 +43,7 @@
 			<FontAwesomeIcon icon={faGear} />
 		</TabAnchor>
 	</TabGroup>
-	<div class="h-full m-2 p-4 flex overflow-hidden">
+	<div class="h-full m-2 p-4 flex overflow-hidden justify-center">
 		<slot />
 	</div>
 </div>

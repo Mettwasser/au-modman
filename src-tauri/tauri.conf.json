@@ -11,16 +11,13 @@
 		"version": "0.1.0"
 	},
 	"tauri": {
-		"allowlist": {
-			"all": false
-		},
 		"bundle": {
 			"active": true,
 			"targets": "msi",
 			"icon": [
 				"icons/amogus.ico"
 			],
-			"identifier": "com.tauri.dev.test",
+			"identifier": "AmongUsModManager",
 			"category": "Utility",
 			"publisher": "Mettwasser",
 			"windows": {

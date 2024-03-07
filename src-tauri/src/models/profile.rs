@@ -15,7 +15,7 @@ pub const PROFILE: &str = "profile";
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Profile<'a, 'b> {
-    pub name: Cow<'a, str>,
+    pub id: Thing,
     pub folder_location: Cow<'a, str>,
     pub created_at: Datetime,
     pub changed_at: Option<Datetime>,
@@ -25,17 +25,11 @@ pub struct Profile<'a, 'b> {
 impl<'a, 'b> Profile<'a, 'b> {
     pub fn new(name: Cow<'a, str>, folder_location: Cow<'a, str>) -> Self {
         Self {
+            id: Thing::from((PROFILE, name.borrow())),
             changed_at: None,
             created_at: Utc::now(),
             modifications: Vec::new(),
             folder_location,
-            name,
         }
-    }
-}
-
-impl<'a, 'b> GetThing for Profile<'a, 'b> {
-    fn get_thing(&self) -> Thing {
-        ("profile", self.name.borrow()).into()
     }
 }
