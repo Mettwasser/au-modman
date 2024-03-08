@@ -2,11 +2,14 @@ use std::borrow::{Borrow, Cow};
 
 use serde::{Deserialize, Serialize};
 use surrealdb::sql::{Id, Thing};
+use ts_rs::TS;
 
 pub const MODS: &str = "mods";
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, TS)]
+#[ts(export, export_to = "../src/types/")]
 pub struct Modification<'a> {
+    #[ts(skip)]
     pub id: Thing,
     pub download_url: Cow<'a, str>,
     pub name: Cow<'a, str>,
