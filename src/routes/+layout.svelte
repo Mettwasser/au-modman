@@ -2,11 +2,21 @@
 	import { page } from '$app/stores';
 	import { faGear, faGears, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	import { TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
+	import { Modal, TabAnchor, TabGroup, type ModalComponent } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
+	import { initializeStores } from '@skeletonlabs/skeleton';
+	import AddProfileModal from '$lib/AddProfileModal.svelte';
+	initializeStores();
+
+	// Registry for all Modals
+	const modalRegistry: Record<string, ModalComponent> = {
+		addProfile: { ref: AddProfileModal }
+	};
 </script>
 
-<div class="flex flex-col h-full justify-center">
+<Modal components={modalRegistry} />
+
+<div class="flex h-full flex-col justify-center">
 	<TabGroup
 		justify="justify-center"
 		active="bg-gradient-to-br from-tertiary-500/60 to-secondary-500/60"
@@ -14,7 +24,7 @@
 		flex="flex-1 md:flex-none"
 		rounded="rounded-md"
 		border=""
-		class="w-full mt-4 px-6 md:px-0"
+		class="mt-4 w-full px-6 md:px-0"
 		regionList="gap-1"
 	>
 		<TabAnchor href="/" selected={$page.url.pathname === '/'}>
@@ -31,7 +41,7 @@
 			<span>Mods</span>
 			<FontAwesomeIcon icon={faGears} class="ml-1" />
 		</TabAnchor>
-		<div class="!flex md:absolute md:right-4 gap-1">
+		<div class="!flex gap-1 md:absolute md:right-4">
 			<TabAnchor href="/credits" selected={$page.url.pathname === '/credits'} class="hidden md:block">
 				<FontAwesomeIcon icon={faUsers} />
 			</TabAnchor>
@@ -43,7 +53,7 @@
 			<FontAwesomeIcon icon={faGear} />
 		</TabAnchor>
 	</TabGroup>
-	<div class="h-full m-2 p-4 flex overflow-hidden justify-center">
+	<div class="m-2 flex h-full justify-center overflow-hidden p-4">
 		<slot />
 	</div>
 </div>
