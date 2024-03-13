@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use surrealdb::{
     engine::any::Any,
     opt::Resource,
-    sql::{Array, Datetime, Id, Idioms, Thing},
+    sql::{Array, Datetime, Id, Thing},
     Surreal,
 };
 

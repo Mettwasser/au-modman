@@ -13,7 +13,6 @@ use surrealdb::{
 use tauri::PathResolver;
 
 pub const DB_NAME: &str = "au_modman.db";
-const WHERE_MODIFICATION: &str = "name = $name AND version = $version";
 const DEFINE_TABLES_SQL: &str = include_str!("../statements/define_tables.surql");
 
 fn get_db_file_path(pr: PathResolver) -> anyhow::Result<String> {
@@ -46,7 +45,9 @@ impl DbManager {
 
         let db = connect(format!("file://{}", db_path)).await?;
 
-        db.use_ns("prod").use_db(version).await?;
+        db.use_ns("prod")
+            .use_db(version.split('.').nth(0).unwrap())
+            .await?;
 
         db.query(
             DEFINE_TABLES_SQL
@@ -117,26 +118,6 @@ impl DbManager {
             .delete(Resource::from(modification.id.clone()))
             .await
             .map(|_| ())
-    }
-
-    pub async fn get_modification(
-        &self,
-        name: String,
-        version: String,
-    ) -> Result<Option<Modification>, String> {
-        let mut modifications = self
-            .db
-            .query(format!("SELECT * FROM {MOD} WHERE {WHERE_MODIFICATION};"))
-            .bind(("name", name))
-            .bind(("version", version))
-            .await
-            .map_err(|_err| "Failed to get Mod".to_string())?;
-
-        let modification: Option<Modification> = modifications
-            .take(0)
-            .map_err(|_err| "Failed to get Mod".to_string())?;
-
-        Ok(modification)
     }
 
     pub async fn edit_modification(
@@ -272,13 +253,6 @@ impl DbManager {
         let profiles: Vec<Profile> = result.take(0)?;
 
         Ok(profiles)
-    }
-
-    pub async fn delete_profile(&self, profile: Profile) -> Result<(), surrealdb::Error> {
-        self.db
-            .delete(Resource::RecordId(profile.id))
-            .await
-            .map(|_| ())
     }
     // endregion
 }

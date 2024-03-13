@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { invoke } from '@tauri-apps/api';
 	import { getVersion } from '@tauri-apps/api/app';
 
+	let lastPlayed: Promise<string> = invoke('get_config', { configName: 'last_played' });
+	let profileCount: Promise<number> = invoke('get_profile_count');
 	let version = getVersion();
 </script>
 
@@ -17,11 +20,21 @@
 >
 	<div class="col-start-1 col-end-3 !bg-gradient-to-br from-primary-300/80 to-tertiary-700/80">
 		<header class="h3 card-header">Last played</header>
-		<section class="text-center">3.4.2024 21:55</section>
+		<section class="text-center">
+			{#await lastPlayed then lastPlayed}
+				{new Date(lastPlayed).toDateString()}
+			{:catch}
+				-
+			{/await}
+		</section>
 	</div>
 	<div class="col-start-3 col-end-6 !bg-gradient-to-bl from-success-400/80 to-secondary-400/80">
 		<header class="h3 card-header">Profiles</header>
-		<section class="text-center">7</section>
+		<section class="text-center">
+			{#await profileCount then profiles}
+				{profiles}
+			{/await}
+		</section>
 	</div>
 	<div class="col-start-1 col-end-4 !bg-gradient-to-tr from-warning-400/80 to-error-500/80">
 		<header class="h3 card-header">with ❤️ by Mettwasser</header>

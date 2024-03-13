@@ -1,18 +1,14 @@
 <script lang="ts">
-	import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-	import type { ModalSettings, ToastSettings } from '@skeletonlabs/skeleton';
-	import ModCard from '$lib/ModCard.svelte';
+	import { getToastStore } from '@skeletonlabs/skeleton';
+	import type { ToastSettings } from '@skeletonlabs/skeleton';
 	import { Pulse } from 'svelte-loading-spinners';
-	import { loadMods } from '../../utils/loadMods.js';
 	import { invoke } from '@tauri-apps/api';
-	import type { Modification } from '../../types/Modification.js';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faFolder } from '@fortawesome/free-solid-svg-icons';
 	import { open } from '@tauri-apps/api/dialog';
-	import { exists, readDir } from '@tauri-apps/api/fs';
+	import { readDir } from '@tauri-apps/api/fs';
 	import { loadSettingAuInstallDir } from '../../utils/loadSettings.js';
 
-	const modalStore = getModalStore();
 	const toastStore = getToastStore();
 
 	let amongUsInstallationPathTask = loadSettingAuInstallDir();

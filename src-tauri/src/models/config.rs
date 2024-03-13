@@ -1,8 +1,7 @@
 use std::borrow::Borrow;
 
-use chrono::Utc;
 use serde::{Deserialize, Serialize};
-use surrealdb::sql::{Datetime, Id, Thing};
+use surrealdb::sql::Thing;
 
 pub const CONFIG: &str = "config";
 

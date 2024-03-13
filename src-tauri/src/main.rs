@@ -35,7 +35,8 @@ fn main() -> Result<(), Box<dyn Error>> {
             get_profiles,
             delete_profile,
             launch_profile,
-            edit_profile
+            edit_profile,
+            get_profile_count
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,16 +1,16 @@
-use std::{
-    path::{Path, PathBuf},
-    process::Command,
-};
+use std::path::{Path, PathBuf};
 
+use chrono::Utc;
 use surrealdb::sql::{Thing, Value};
 use tokio::fs;
 
 use crate::{
     db_manager::DbManager,
     models::{
+        config::Config,
+        count::Count,
         modification::Modification,
-        profile::{CreateProfile, Profile, ProfileWithMods},
+        profile::{CreateProfile, Profile, ProfileWithMods, PROFILE},
     },
 };
 
@@ -58,7 +58,15 @@ pub async fn add_profile(
 
     let mut profile = CreateProfile::new(profile_name, profile_location.display().to_string());
 
-    let au_install_dir = db_manager.get_config("au_install_dir").await?;
+    let au_install_dir = db_manager.get_config("au_install_dir").await.map_err(|_| {
+        "Among Us installation path is not set. Set it in the settings Tab.".to_string()
+    })?;
+
+    if au_install_dir.is_empty() {
+        return Err(
+            "Among Us installation path is not set. Set it in the settings Tab.".to_string(),
+        );
+    }
 
     copy_dir(
         &PathBuf::from(&au_install_dir),
@@ -103,7 +111,10 @@ pub async fn delete_profile(
 }
 
 #[tauri::command]
-pub async fn launch_profile(profile: Profile) -> Result<(), String> {
+pub async fn launch_profile(
+    profile: Profile,
+    db_manager: tauri::State<'_, DbManager>,
+) -> Result<(), String> {
     tokio::process::Command::new(PathBuf::from(profile.folder_location).join("Among Us.exe"))
         .spawn()
         .map_err(|err| err.to_string())?
@@ -111,7 +122,10 @@ pub async fn launch_profile(profile: Profile) -> Result<(), String> {
         .await
         .map_err(|err| err.to_string())?;
 
-    Ok(())
+    db_manager
+        .set_config(Config::new("last_played".into(), Utc::now().to_rfc3339()))
+        .await
+        .map_err(|err| err.to_string())
 }
 
 #[tauri::command]
@@ -121,4 +135,17 @@ pub async fn edit_profile(
     db_manager: tauri::State<'_, DbManager>,
 ) -> Result<(), String> {
     db_manager.edit_profile(profile, new_name).await
+}
+
+#[tauri::command]
+pub async fn get_profile_count(db_manager: tauri::State<'_, DbManager>) -> Result<i32, String> {
+    let mut result = db_manager
+        .db
+        .query(format!("SELECT count() FROM {PROFILE}"))
+        .await
+        .map_err(|err| err.to_string())?;
+
+    let profile_count: Option<Count> = result.take(0).map_err(|err| err.to_string())?;
+
+    Ok(profile_count.map(|c| c.count).unwrap_or(0))
 }

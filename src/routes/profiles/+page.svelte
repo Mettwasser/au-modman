@@ -5,6 +5,8 @@
 	import { Pulse } from 'svelte-loading-spinners';
 	import { invoke } from '@tauri-apps/api';
 	import type { ProfileWithMods } from '../../types/Profile';
+	import { writable, type Writable } from 'svelte/store';
+	import { playingProfile } from '../../stores';
 
 	const modalStore = getModalStore();
 	let toastStore = getToastStore();
@@ -79,6 +81,8 @@
 	}
 
 	async function launchProfile(profile: ProfileWithMods) {
+		playingProfile.set(profile);
+
 		await invoke('launch_profile', { profile: { ...profile, modifications: profile.modifications.map((mod) => mod.id) } }).catch(
 			(why) => {
 				const toast: ToastSettings = {
@@ -90,8 +94,14 @@
 				toastStore.trigger(toast);
 			}
 		);
+		playingProfile.set(null);
 	}
 </script>
+
+{#if $playingProfile != null}
+	<!-- LOCK SCREEN -->
+	<div class="fixed inset-0 z-[9999] bg-black opacity-20" />
+{/if}
 
 <div class="flex w-4/5 flex-col items-center">
 	<div class="flex w-full justify-end">
@@ -112,7 +122,7 @@
 		{:then profiles}
 			{#each profiles as profile (profile)}
 				<div class="m-4 mx-6 basis-5/12">
-					<ProfileCard {profile} onDelete={askDelete} onEdit={editProfile} onPlay={launchProfile} />
+					<ProfileCard {profile} {playingProfile} onDelete={askDelete} onEdit={editProfile} onPlay={launchProfile} />
 				</div>
 			{/each}
 		{/await}

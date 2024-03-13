@@ -62,6 +62,9 @@
 			},
 			"fs": {
 				"all": true
+			},
+			"shell": {
+				"open": true
 			}
 		}
 	}

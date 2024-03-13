@@ -1,15 +1,13 @@
-# Among Us Modmanager
-Goal of this project is to get more familiar with Rust, Tauri & SurrealDB.
+# A simplistic Among Us Mod Manager/Launcher
+This App allows you to manage Among Us Mods with ease!
 
-Most of the planning will be done in here.
+This App is for Windows only, Linux Support might come in the near future - if requested.
 
-## Requirements
-What people should be able to do (V1)?
+## How to use
+You need the URL to the Zip file of the Mod you want to Download.
 
-People should be able to...
-- easily install new mods
-- have different profiles, which can have:
-    - different mod(s) installed
-    - different names
+After that, head over to the `Mods` Tab, click "Add Mod", give it a Name, paste the Link, and enter a Version. Then click "Create".
 
-The UI will be made using tauri.
+Once it has finished loading, head to the `Profiles` Tab, click "Create Profile", give it a Name and select the Mods you want to use.
+
+You can now Launch this Profile (which is related to the modded version of Among Us) by pressing on the green Button with the play icon.
