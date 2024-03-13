@@ -7,8 +7,10 @@
 	import { loadMods } from '../utils/loadMods';
 	import { Circle, Pulse } from 'svelte-loading-spinners';
 	import type { Modification } from '../types/Modification';
+	import type { SurrealID } from '../types/SurrealID';
 	import type { SvelteComponent } from 'svelte';
 	import { invoke } from '@tauri-apps/api';
+	import type { Profile } from '../types/Profile';
 
 	export let parent: SvelteComponent;
 
@@ -16,15 +18,12 @@
 	const toastStore = getToastStore();
 
 	// stuff to return
-	let profileName: string = '';
-	let selectedMods: Modification[] = [];
+	let profile: Profile = $modalStore[0].meta!.profile;
+	let profileName: string = profile.name.repeat(1); // clone string, it shouldn't refer to the profile since it's passed separately
+
 	let confirmed = false;
 
-	// vars for searching through the mods
-	let filter = '';
-	let mods = loadMods();
-
-	async function addProfile() {
+	async function editProfile() {
 		if (!profileName) {
 			const toast: ToastSettings = {
 				message: 'All fields must contain a value!',
@@ -34,21 +33,10 @@
 			toastStore.trigger(toast);
 			return;
 		}
-
-		if (selectedMods.length == 0) {
-			const toast: ToastSettings = {
-				message: 'Please select at least 1 modification!',
-				background: 'variant-filled-error',
-				timeout: 5000
-			};
-			toastStore.trigger(toast);
-			return;
-		}
-
 		confirmed = true;
-		await invoke('add_profile', { profileName: profileName, modifications: selectedMods }).catch((why) => {
+		await invoke('edit_profile', { profile: profile.id, newName: profileName }).catch((why) => {
 			const toast: ToastSettings = {
-				message: `Couldn't add Profile: ${why}`,
+				message: `Couldn't edit Profile: ${why}`,
 				background: 'variant-filled-error',
 				timeout: 5000,
 				hoverable: true
@@ -84,34 +72,11 @@
 						placeholder="Profile Name..."
 					/>
 				</div>
-
-				<div>
-					<h3 class="mb-4 ml-4 text-center text-2xl">Mods</h3>
-					<input class="input" autocomplete="off" type="search" bind:value={filter} placeholder="Search..." />
-					<div class="h-full max-h-60 overflow-y-auto">
-						{#await mods}
-							<Pulse color="#FFFFFF" />
-						{:then mods}
-							<ListBox active="variant-filled-success !text-white" hover="hover:variant-soft-success" multiple class="w-full">
-								{#each filterMods(mods, filter) as mod (mod)}
-									<ListBoxItem bind:group={selectedMods} name="medium" value={mod}>
-										<svelte:fragment slot="trail">
-											{#if selectedMods.includes(mod)}
-												<FontAwesomeIcon icon={faCheck} />
-											{/if}
-										</svelte:fragment>
-										{mod.name}
-									</ListBoxItem>
-								{/each}
-							</ListBox>
-						{/await}
-					</div>
-				</div>
 			</div>
 			<div class="mr-5 flex justify-end space-x-2">
 				<button class="on variant-filled-error-400 btn outline-0" on:click={() => parent.onClose()}>Cancel</button>
 				{#if !confirmed}
-					<button class="variant-filled-success btn !text-white outline-0" on:click={addProfile}>Create</button>
+					<button class="variant-filled-success btn !text-white outline-0" on:click={editProfile}>Save</button>
 				{:else}
 					<!-- LOCK SCREEN -->
 					<div class="fixed inset-0 z-[9999] bg-black opacity-30" />

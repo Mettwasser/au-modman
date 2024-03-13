@@ -1,9 +1,17 @@
-import type { Modification } from './modification';
+import type { Modification } from './Modification';
+import type { SurrealID } from './SurrealID';
 
-export interface Profile {
+export interface ProfileWithMods {
+	id: SurrealID;
 	name: string;
-	folder_location: string;
-	created_at: Date;
-	changed_at: Date | null;
+	folderLocation: string;
+	createdAt: string;
 	modifications: Array<Modification>;
+}
+export interface Profile {
+	id: SurrealID;
+	name: string;
+	folderLocation: string;
+	createdAt: string;
+	modifications: Array<SurrealID>;
 }

@@ -1,18 +1,53 @@
 <script lang="ts">
 	import '@fortawesome/fontawesome-svg-core/styles.css';
-	import { faPlay, faWrench } from '@fortawesome/free-solid-svg-icons';
+	import { faPlay, faTrash, faWrench } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	export let name: string;
+	import type { ProfileWithMods } from '../types/Profile';
+	import { Circle } from 'svelte-loading-spinners';
+	export let profile: ProfileWithMods;
+	export let onDelete: (profile: ProfileWithMods) => Promise<void>;
+	export let onEdit: (profile: ProfileWithMods) => Promise<void>;
+	export let onPlay: (profile: ProfileWithMods) => Promise<void>;
+
+	let isPlaying = false;
+
+	async function playProfile(profile: ProfileWithMods) {
+		isPlaying = true;
+		await onPlay(profile);
+		isPlaying = false;
+	}
 </script>
 
-<div class="card !bg-surface-800/45 border-[1px] border-white/20 rounded-xl flex items-center">
-	<header class="m-4 h6 text-center align-middle">{name}</header>
-	<div class="ml-auto mr-5">
-		<button type="button" class="btn-icon rounded-md w-8 h-8  btn-icon-md variant-filled-surface mr-1">
-			<FontAwesomeIcon icon={faWrench} style="color: white;" />
-		</button>
-		<button type="button" class="btn-icon rounded-md w-8 h-8 btn-icon-md variant-filled-success">
-			<FontAwesomeIcon icon={faPlay} style="color: white;" />
-		</button>
+<div class="card flex w-full items-center rounded-xl border-[1px] border-white/20 !bg-surface-800/45">
+	<header class="h6 m-4 text-center align-middle">{profile.name}</header>
+	<div class="m-5 flex flex-1 justify-end">
+		<div class="flex gap-x-2">
+			<button
+				type="button"
+				class="btn-icon-md variant-filled-error btn-icon h-8 w-8 rounded-md"
+				on:click={() => onDelete(profile)}
+			>
+				<FontAwesomeIcon icon={faTrash} style="color: white;" />
+			</button>
+			<button
+				type="button"
+				class="btn-icon-md variant-filled-surface btn-icon h-8 w-8 rounded-md"
+				on:click={() => onEdit(profile)}
+			>
+				<FontAwesomeIcon icon={faWrench} style="color: white;" />
+			</button>
+			<button
+				type="button"
+				class="btn-icon-md variant-filled-success btn-icon h-8 w-8 rounded-md"
+				disabled={isPlaying}
+				on:click={() => playProfile(profile)}
+			>
+				{#if isPlaying}
+					<Circle color="#FFFFFF" size="16" />
+				{:else}
+					<FontAwesomeIcon icon={faPlay} style="color: white;" />
+				{/if}
+			</button>
+		</div>
 	</div>
 </div>

@@ -1,8 +1,8 @@
-use surrealdb::sql::Thing;
+use serde::Deserialize;
+use surrealdb::sql::Datetime;
 
+use crate::DateTime;
+
+pub mod config;
 pub mod modification;
 pub mod profile;
-
-pub trait GetThing {
-    fn get_thing(&self) -> Thing;
-}

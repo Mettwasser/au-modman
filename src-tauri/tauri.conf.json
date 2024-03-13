@@ -7,15 +7,14 @@
 		"distDir": "../build"
 	},
 	"package": {
-		"productName": "Among Us Mod Manager",
-		"version": "0.1.0"
+		"productName": "Among Us Mod Manager"
 	},
 	"tauri": {
 		"bundle": {
 			"active": true,
 			"targets": "msi",
 			"icon": [
-				"icons/amogus.ico"
+				"icons/app.ico"
 			],
 			"identifier": "AmongUsModManager",
 			"category": "Utility",
@@ -45,6 +44,25 @@
 				"minWidth": 700,
 				"minHeight": 500
 			}
-		]
+		],
+		"allowlist": {
+			"all": false,
+			"app": {
+				"all": false,
+				"hide": false,
+				"show": false
+			},
+			"clipboard": {
+				"all": false,
+				"readText": false,
+				"writeText": false
+			},
+			"dialog": {
+				"open": true
+			},
+			"fs": {
+				"all": true
+			}
+		}
 	}
 }
