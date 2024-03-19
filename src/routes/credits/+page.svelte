@@ -6,7 +6,7 @@
 		<p>The SkeletonUI Discord server for helping me with the UI Elements</p>
 		<p>
 			<a href="https://github.com/Bekian" class="text-blue-600" target="_blank">@Bekian</a> and
-			<a href="https://github.com/DevValie" class="text-blue-600" target="_blank">@DevVali</a> for
+			<a href="https://github.com/DevVali" class="text-blue-600" target="_blank">@DevVali</a> for helping with the UI too
 		</p>
 	</div>
 </div>
